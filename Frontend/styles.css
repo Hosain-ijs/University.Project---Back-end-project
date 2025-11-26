@@ -41,3 +41,17 @@ input[type="text"], input[type="password"] {
     cursor: pointer;
     font-size: 16px;
 }
+
+.error {
+    color: red;
+    margin-top: 15px;
+}
+
+.error h3 {
+    text-align: center;
+    font-weight: normal;
+}
+
+.hidden {
+    display: none;
+}

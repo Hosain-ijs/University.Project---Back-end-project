@@ -1,4 +1,4 @@
-const handlelogin =  () => {
+const handlelogin =  async() => {
     const userIdInput = document.getElementById('user-id');
     const passwordInput = document.getElementById('password');
     
@@ -10,7 +10,23 @@ const handlelogin =  () => {
         password: password,
     };
 
-    console.log(user);
+    const userInfo = await fetchUserInfo(user);
+    console.log(userInfo);
+    const errorElement = document.getElementById('user-login-error');
+
+    // show error message if userInfo did not match
+    if(userInfo.length === 0){
+        errorElement.classList.remove('hidden');
+    }
+    else{
+        errorElement.classList.add('hidden');
+
+        // store logged in user info in local storage before redirecting to post.html
+        localStorage.setItem("loggedInUser", JSON.stringify(userInfo[0]));
+
+        // redirect to post.html
+        window.location.href = "post.html";
+    }
 };
 
 const fetchUserInfo = async(user) => {
@@ -31,6 +47,6 @@ const fetchUserInfo = async(user) => {
     }
 
     finally{
-        console.log("Fetch attempt completed.", data);
+        return data;
     }
 };
