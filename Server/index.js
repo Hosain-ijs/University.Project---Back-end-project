@@ -30,6 +30,28 @@ db.connect((err) => {
   }
 });
 
+// getting user data from server
+
+app.post('/getUserInfo', (req, res) => {
+
+  const { userId, password } = req.body;
+
+  const getUserInfosql = 'SELECT userid, userName, userImage FROM users WHERE users.userId = ? AND users.userPassword = ?';
+
+  let query = db .query(getUserInfosql, [userId, password], (err, result) => {
+    if(err) {
+      console.log("Error while fetching user data: ", err);
+      throw err;
+    }
+    else{
+      console.log("User data fetched successfully");
+      res.send(result);
+    }
+  });
+});
+
+// Starting the server
+
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
 });
