@@ -1,0 +1,119 @@
+*{
+    font-family: "Poppins", sans-serif;
+}
+
+#post-container{
+    width: 90%;
+    border: 1px solid #ccc;
+    margin : 0 auto;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    display : flex;
+    flex-direction : column;
+    align-items : center;
+    justify-content: center;
+}
+
+.post-header{
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-bottom: 10px;
+}
+
+.post{
+    width: 60%;
+    padding: 15px;
+    border: 2px solid #eee;
+    border-radius: 10px;
+    background-color: #fafafa;
+    margin: 20px;
+}
+
+.post-user-image img{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.post-username{
+    margin: 0;
+}
+
+.post-time{
+    margin: 0;
+    font-size: 0.9em;
+    color: #777;
+}
+
+.post-image{
+    display: flex;
+    justify-content: center;
+}
+
+.post-image img{
+    width: 50%;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-top: 10px;
+}
+
+.comment{
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.comment-user-image img{
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.comment-text-container{
+    background-color: #f9f9f9;
+    padding: 10px;
+    border-radius: 8px;
+}
+
+.comment-text-container h4, p{
+    margin: 0;
+}
+
+.comment-text-container h4{
+    margin-bottom: 5px;
+}   
+
+.new-comment-section{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 15px;
+}
+
+.new-comment-input{
+    width: 100%;
+}
+
+.new-comment-textbox{
+    padding: 8px;
+    border-radius: 20px;
+    border: 1px solid #ccc;
+    outline: none;
+    width: 99%;
+}
+
+.new-comment-submit-button{
+    padding: 8px 15px;
+    border: none;
+    border-radius: 20px;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+}

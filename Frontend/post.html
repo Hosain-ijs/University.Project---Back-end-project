@@ -4,8 +4,280 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Posbook</title>
+    <link rel="stylesheet" href="./postStyle.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=PT+Serif:ital,wght@0,400;0,700;1,400;1,700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
 </head>
 <body>
     <h1>Hello, username</h1>
+
+    <section id = "post-container">
+
+    <!-- post -->
+     <div class = "post">
+        <div class = "post-header">
+            <div class = "post-user-image">
+                <img src="https://sb.ecobnb.net/app/uploads/sites/3/2020/01/nature-1170x490.jpg.webp" alt="post-user-image">
+            </div>
+
+            <div class = "post-username-time">
+                <p class="post-username">username</p>
+                <div class = "post-time">
+                    <span>13</span>
+                    <span>hours ago</span>
+                </div>
+            </div>
+        </div>
+
+        <div class = "post-text">
+            <p class = "post-text-content">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi consequuntur quaerat numquam itaque perferendis est quae a ex eaque quam corporis magnam aut perspiciatis, tempore libero fuga cum laborum aspernatur?
+            </p>
+        </div>
+
+        <div class = "post-image">
+            <img src="https://sb.ecobnb.net/app/uploads/sites/3/2020/01/nature-1170x490.jpg.webp" alt="post-image"  >
+
+        </div>
+
+        <!-- comments section -->
+        <div class = "comment-holder">
+        <div class = "comment">
+                <div class = "comment-user-image">
+                    <img src="https://sb.ecobnb.net/app/uploads/sites/3/2020/01/nature-1170x490.jpg.webp" alt="comment-user-image">
+
+                </div>
+
+                <div class = "comment-text-container">
+                    <h4>Comment Username</h4>
+                    <p class = "comment-text">
+                        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptatem, molestiae.
+                    </p>
+            </div>
+        </div>
+
+        <div class = "comment">
+                <div class = "comment-user-image">
+                    <img src="https://sb.ecobnb.net/app/uploads/sites/3/2020/01/nature-1170x490.jpg.webp" alt="comment-user-image">
+
+                </div>
+
+                <div class = "comment-text-container">
+                    <h4>Comment Username</h4>
+                    <p class = "comment-text">
+                        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptatem, molestiae.
+                    </p>
+            </div>
+        </div>
+
+        <div class = "comment">
+                <div class = "comment-user-image">
+                    <img src="https://sb.ecobnb.net/app/uploads/sites/3/2020/01/nature-1170x490.jpg.webp" alt="comment-user-image">
+
+                </div>
+
+                <div class = "comment-text-container">
+                    <h4>Comment Username</h4>
+                    <p class = "comment-text">
+                        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptatem, molestiae.
+                    </p>
+            </div>
+        </div>
+        </div>
+
+        <!-- new comment section -->
+         <div class = "new-comment-section">
+            <div class = "new-comment-input">
+                <input 
+                type="text" 
+                placeholder="Add a comment..." 
+                class = "new-comment-textbox" 
+                id = "new-comment-textbox-for-postId1">
+            </div>
+            <div class = "new-comment-button">
+                <button class = "new-comment-submit-button" id = "new-comment-submit-button-for-postId1">Comment</button>
+
+            </div>
+         </div>
+    </div>
+
+    <!-- post -->
+     <div class = "post">
+        <div class = "post-header">
+            <div class = "post-user-image">
+                <img src="https://sb.ecobnb.net/app/uploads/sites/3/2020/01/nature-1170x490.jpg.webp" alt="post-user-image">
+            </div>
+
+            <div class = "post-username-time">
+                <p class="post-username">username</p>
+                <div class = "post-time">
+                    <span>13</span>
+                    <span>hours ago</span>
+                </div>
+            </div>
+        </div>
+
+        <div class = "post-text">
+            <p class = "post-text-content">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi consequuntur quaerat numquam itaque perferendis est quae a ex eaque quam corporis magnam aut perspiciatis, tempore libero fuga cum laborum aspernatur?
+            </p>
+        </div>
+
+        <div class = "post-image">
+            <img src="https://sb.ecobnb.net/app/uploads/sites/3/2020/01/nature-1170x490.jpg.webp" alt="post-image"  >
+
+        </div>
+
+        <!-- comments section -->
+        <div class = "comment-holder">
+        <div class = "comment">
+                <div class = "comment-user-image">
+                    <img src="https://sb.ecobnb.net/app/uploads/sites/3/2020/01/nature-1170x490.jpg.webp" alt="comment-user-image">
+
+                </div>
+
+                <div class = "comment-text-container">
+                    <h4>Comment Username</h4>
+                    <p class = "comment-text">
+                        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptatem, molestiae.
+                    </p>
+            </div>
+        </div>
+
+        <div class = "comment">
+                <div class = "comment-user-image">
+                    <img src="https://sb.ecobnb.net/app/uploads/sites/3/2020/01/nature-1170x490.jpg.webp" alt="comment-user-image">
+
+                </div>
+
+                <div class = "comment-text-container">
+                    <h4>Comment Username</h4>
+                    <p class = "comment-text">
+                        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptatem, molestiae.
+                    </p>
+            </div>
+        </div>
+
+        <div class = "comment">
+                <div class = "comment-user-image">
+                    <img src="https://sb.ecobnb.net/app/uploads/sites/3/2020/01/nature-1170x490.jpg.webp" alt="comment-user-image">
+
+                </div>
+
+                <div class = "comment-text-container">
+                    <h4>Comment Username</h4>
+                    <p class = "comment-text">
+                        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptatem, molestiae.
+                    </p>
+            </div>
+        </div>
+        </div>
+
+        <!-- new comment section -->
+         <div class = "new-comment-section">
+            <div class = "new-comment-input">
+                <input 
+                type="text" 
+                placeholder="Add a comment..." 
+                class = "new-comment-textbox" 
+                id = "new-comment-textbox-for-postId1">
+            </div>
+            <div class = "new-comment-button">
+                <button class = "new-comment-submit-button" id = "new-comment-submit-button-for-postId1">Comment</button>
+
+            </div>
+         </div>
+    </div>
+
+    <!-- post -->
+     <div class = "post">
+        <div class = "post-header">
+            <div class = "post-user-image">
+                <img src="https://sb.ecobnb.net/app/uploads/sites/3/2020/01/nature-1170x490.jpg.webp" alt="post-user-image">
+            </div>
+
+            <div class = "post-username-time">
+                <p class="post-username">username</p>
+                <div class = "post-time">
+                    <span>13</span>
+                    <span>hours ago</span>
+                </div>
+            </div>
+        </div>
+
+        <div class = "post-text">
+            <p class = "post-text-content">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi consequuntur quaerat numquam itaque perferendis est quae a ex eaque quam corporis magnam aut perspiciatis, tempore libero fuga cum laborum aspernatur?
+            </p>
+        </div>
+
+        <div class = "post-image">
+            <img src="https://sb.ecobnb.net/app/uploads/sites/3/2020/01/nature-1170x490.jpg.webp" alt="post-image"  >
+
+        </div>
+
+        <!-- comments section -->
+        <div class = "comment-holder">
+        <div class = "comment">
+                <div class = "comment-user-image">
+                    <img src="https://sb.ecobnb.net/app/uploads/sites/3/2020/01/nature-1170x490.jpg.webp" alt="comment-user-image">
+
+                </div>
+
+                <div class = "comment-text-container">
+                    <h4>Comment Username</h4>
+                    <p class = "comment-text">
+                        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptatem, molestiae.
+                    </p>
+            </div>
+        </div>
+
+        <div class = "comment">
+                <div class = "comment-user-image">
+                    <img src="https://sb.ecobnb.net/app/uploads/sites/3/2020/01/nature-1170x490.jpg.webp" alt="comment-user-image">
+
+                </div>
+
+                <div class = "comment-text-container">
+                    <h4>Comment Username</h4>
+                    <p class = "comment-text">
+                        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptatem, molestiae.
+                    </p>
+            </div>
+        </div>
+
+        <div class = "comment">
+                <div class = "comment-user-image">
+                    <img src="https://sb.ecobnb.net/app/uploads/sites/3/2020/01/nature-1170x490.jpg.webp" alt="comment-user-image">
+
+                </div>
+
+                <div class = "comment-text-container">
+                    <h4>Comment Username</h4>
+                    <p class = "comment-text">
+                        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptatem, molestiae.
+                    </p>
+            </div>
+        </div>
+        </div>
+
+        <!-- new comment section -->
+         <div class = "new-comment-section">
+            <div class = "new-comment-input">
+                <input 
+                type="text" 
+                placeholder="Add a comment..." 
+                class = "new-comment-textbox" 
+                id = "new-comment-textbox-for-postId1">
+            </div>
+            <div class = "new-comment-button">
+                <button class = "new-comment-submit-button" id = "new-comment-submit-button-for-postId1">Comment</button>
+
+            </div>
+         </div>
+    </div>
+    </section>
 </body>
 </html>
