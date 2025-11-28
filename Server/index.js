@@ -50,6 +50,21 @@ app.post('/getUserInfo', (req, res) => {
   });
 });
 
+app.get("/getAllPosts", (req, res) => {
+  const sqlForAllPosts = `SELECT users.userName As PosatedUserName, users.userImage As PostedUserImage, posts.postedTime, posts.postText, posts.postImageUrl FROM posts INNER JOIN users ON posts.postedUserId=users.userId ORDER BY posts.postedTime DESC`;
+
+  let query = db .query(sqlForAllPosts, (err, result) => {
+    if(err) {
+      console.log("Error while fetching all posts: ", err);
+      throw err;
+    }
+    else{
+      console.log(result);
+      res.send(result);
+    }
+  });
+});
+
 // Starting the server
 
 app.listen(port, () => {
