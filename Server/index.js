@@ -36,7 +36,7 @@ app.post('/getUserInfo', (req, res) => {
 
   const { userId, password } = req.body;
 
-  const getUserInfosql = 'SELECT userid, userName, userImage FROM users WHERE users.userId = ? AND users.userPassword = ?';
+  const getUserInfosql = 'SELECT userId, userName, userImage FROM users WHERE users.userId = ? AND users.userPassword = ?';
 
   let query = db .query(getUserInfosql, [userId, password], (err, result) => {
     if(err) {
@@ -82,6 +82,29 @@ INNER JOIN users ON comments.commentedUserId=users.userId WHERE comments.comment
       res.send(result);
     }
   });
+});
+
+// API to post a comment on a post
+app.post('/postComment', (req, res) => {
+  const {commentOfPostId, commentedUserId, commentText, commentTime} = req.body;
+  
+  let sqlForPostingComment = `INSERT INTO comments (commentId, commentOfPostId, commentedUserId, commentText, commentTime) VALUES (NULL, ?, ?, ?, ?);
+`;
+
+let query = db.query(sqlForPostingComment, [
+  commentOfPostId, 
+  commentedUserId, 
+  commentText,
+   commentTime
+  ], (err, result) =>{
+    if(err){
+      console.log("Error adding comment to the database: ", err);
+    }
+    else{
+      res.send(result);
+    }
+  }
+);
 });
 
 // Starting the server

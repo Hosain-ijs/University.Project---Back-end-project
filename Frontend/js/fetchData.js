@@ -75,7 +75,76 @@ const showAllPosts = (allposts) => {
 
         postDiv.appendChild(commentsHolderDiv);
     });
+
+    // adding a new comment to the post
+
+    const addNewCommetnDiv = document.createElement("div");
+    addNewCommetnDiv.classList.add("new-comment-section");
+
+    addNewCommetnDiv.innerHTML = `
+            <div class = "new-comment-input">
+                <input 
+                type="text" 
+                placeholder="Add a comment..." 
+                class = "new-comment-textbox" 
+                id = "new-comment-textbox-for-postId-${post.postId}">
+            </div>
+            <div class = "new-comment-button">
+                <button onClick = handlePostComment(${post.postId}) class = "new-comment-submit-button" id = "new-comment-submit-button-for-postId1">Comment</button>
+
+            </div>
+    `
+
+    postDiv.appendChild(addNewCommetnDiv);
 });
+};
+
+const handlePostComment = async (postId) => {
+
+    // collecting logged in user info from local storage
+    let user = localStorage.getItem("loggedInUser");
+    if(user){
+        user = JSON.parse(user);
+    }
+    const commentedUserId = user.userId;
+
+    // collecting comment text from input box
+    const commentInputBox = document.getElementById(`new-comment-textbox-for-postId-${postId}`);
+
+    const commentText = commentInputBox.value;
+
+    //current time of the comment
+
+    let now = new Date();
+
+    now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+    
+    let timeofComment = now. toISOString();
+    
+    const commentObject = {
+        commentOfPostId: postId,
+        commentedUserId: commentedUserId,
+        commentText: commentText,
+        commentTime: timeofComment,
+    };
+
+    try{
+        const res = await fetch("http://localhost:5000/postComment", {
+            method: "POST",
+            headers: {
+                "content-type": "application/json",
+            },
+            body: JSON.stringify(commentObject),
+        });
+        const data = await res.json();
+        console.log("Comment posted successfully: ", data);
+    }
+    catch(err){
+        console.log("Error while posting comment to the server: ", err);
+}
+finally{
+    location.reload();
+}
 };
 
 const fetchAllCommentsOfAPost = async (postId) => {
