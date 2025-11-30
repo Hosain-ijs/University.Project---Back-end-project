@@ -148,13 +148,13 @@ const handlePostComment = async (postId) => {
 
     now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
     
-    let timeofComment = now. toISOString();
+    let timeOfComment = now.toISOString();
     
     const commentObject = {
         commentOfPostId: postId,
         commentedUserId: commentedUserId,
         commentText: commentText,
-        commentTime: timeofComment,
+        commentTime: timeOfComment,
     };
 
     try{
@@ -170,10 +170,10 @@ const handlePostComment = async (postId) => {
     }
     catch(err){
         console.log("Error while posting comment to the server: ", err);
-}
-finally{
-    location.reload();
-}
+    }
+    finally{
+        location.reload();
+    }
 };
 
 const fetchAllCommentsOfAPost = async (postId) => {
@@ -191,7 +191,58 @@ const fetchAllCommentsOfAPost = async (postId) => {
     }
 }
 
-//This function automatically runs
+const handleAddNewPost = async () => {
+   //geting user id from local storage
+    let user = localStorage.getItem("loggedInUser");
+    if(user){
+        user = JSON.parse(user);
+    }
+    const postedUserId = user.userId;
+
+    //current time of the post
+    let now = new Date();
+
+    now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+    
+    let timeOfPost = now.toISOString();
+
+    //post text
+    const postTextElement = document.getElementById('newPost-text');
+    const postText = postTextElement.value;
+
+    //post image
+    const postImageElement = document.getElementById('newPost-image');
+    const postImageUrl = postImageElement.value;
+
+    //creating a post object
+    const postObject = {
+        postedUserId : postedUserId,
+        postedTime : timeOfPost,
+        postText : postText,
+        postImageUrl : postImageUrl,
+    };
+
+        try{
+        const res = await fetch("http://localhost:5000/addNewPost", {
+            method: "POST",
+            headers: {
+                "content-type": "application/json",
+            },
+            body: JSON.stringify(postObject),
+        });
+        const data = await res.json();
+        console.log("Comment posted successfully: ", data);
+    }
+    catch(err){
+        console.log("Error while posting comment to the server: ", err);
+    }
+    finally{
+        location.reload();
+    }
+    
+};
+
+//This functions get called automatically whenever the script (fetchData) is loaded in the HTML page
 fetchAllPosts();
 checkLoggedInUser();
 showLoggedUsename();

@@ -107,6 +107,25 @@ let query = db.query(sqlForPostingComment, [
 );
 });
 
+//addding a new post
+app.post('/addNewPost', (req, res) => {
+  //destructure the req.body object
+  const {postedUserId, postedTime, postText, postImageUrl} = req.body;
+
+  //sql query
+  let sqlForAddingNewPost = `INSERT INTO posts (postId, postedUserId, postedTime, postText, postImageUrl) VALUES (NULL, ?, ?, ?, ?)`;
+
+  let query = db.query(sqlForAddingNewPost, [postedUserId, postedTime, postText, postImageUrl], (err, result) => {
+    if(err){
+      console.log("Error while addding a new post in database: ", err);
+      throw err;
+    }
+    else{
+      res.send(result);
+    }
+  });
+});
+
 // Starting the server
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
