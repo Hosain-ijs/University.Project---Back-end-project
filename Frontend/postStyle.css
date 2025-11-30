@@ -25,6 +25,88 @@
     cursor: pointer;
 }
 
+#add-post-container{
+    width: 90%;
+    margin: 20px auto;
+    display: flex;
+    justify-content: center;
+}
+
+#add-post-container article {
+    display: flex;           
+    align-items: center;     
+    gap: 10px;               
+    width: 60%;
+    background-color: #fafafa;
+    padding: 15px;
+    border-radius: 10px;
+    border: 2px solid #eee;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+#add-post-container article div {
+    display: flex;
+    align-items: center;
+}
+
+#add-post-container article div:nth-child(1) { flex: 2; }
+#add-post-container article div:nth-child(2) { flex: 1; }
+#add-post-container article div:nth-child(3) { width: auto; }
+
+#newPost-text, 
+#newPost-image, 
+.addPost-btn {
+    height: 45px;              
+    width: 100%;               
+    padding: 0 15px;           
+    border: 1px solid #ccc;
+    border-radius: 5px;        
+    box-sizing: border-box;    
+    margin: 0;                
+    font-size: 14px;
+    line-height: normal;      
+    vertical-align: middle;
+    font-family: "Poppins", sans-serif;
+}
+
+#newPost-text {
+    resize: none;              
+    padding-top: 12px;         
+    overflow: hidden;          
+}
+
+.addPost-btn {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    padding: 0 25px
+}
+
+.addPost-btn:hover {
+    background-color: #0056b3;
+}
+
+#newPost-text{
+    resize: none;              
+    padding-top: 12px;        
+}
+
+.addPost-btn{
+    padding: 8px 15px;
+    border: none;
+    border-radius: 10px;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+}
+
+.addPost-btn:hover{
+    background-color: #3790ef;
+    transition: 1s;
+}
+
 #post-container{
     width: 90%;
     border: 1px solid #ccc;
@@ -139,4 +221,9 @@
     background-color: #007bff;
     color: white;
     cursor: pointer;
+}
+
+.new-comment-submit-button:hover{
+    background-color: #3790ef;
+    transition: 1s;
 }
