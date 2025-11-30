@@ -2,6 +2,29 @@
     font-family: "Poppins", sans-serif;
 }
 
+.header{
+    width: 90%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+}
+
+.logoutBtn{
+    background: black;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.logoutBtn:hover{
+    background: gray;  
+    cursor: pointer;
+}
+
 #post-container{
     width: 90%;
     border: 1px solid #ccc;
