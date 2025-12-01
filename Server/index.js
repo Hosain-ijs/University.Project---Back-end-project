@@ -108,10 +108,9 @@ let query = db.query(sqlForPostingComment, [
 
 //addding a new post
 app.post('/addNewPost', (req, res) => {
-  //destructure the req.body object
+
   const {postedUserId, postedTime, postText, postImageUrl} = req.body;
 
-  //sql query
   let sqlForAddingNewPost = `INSERT INTO posts (postId, postedUserId, postedTime, postText, postImageUrl) VALUES (NULL, ?, ?, ?, ?)`;
 
   let query = db.query(sqlForAddingNewPost, [postedUserId, postedTime, postText, postImageUrl], (err, result) => {
@@ -169,6 +168,43 @@ app.put('/editPost', (req, res) => {
         } else {
             res.send("Post updated");
         }
+    });
+});
+
+// API to Toggle Like (Add or Remove)
+app.post('/toggleLike', (req, res) => {
+    const { likedPostId, likedUserId } = req.body;
+
+    const sqlCheck = "SELECT * FROM likes WHERE likedPostId = ? AND likedUserId = ?";
+    
+    db.query(sqlCheck, [likedPostId, likedUserId], (err, result) => {
+        if (err) {
+            console.log(err);
+            res.send({ error: "Error" });
+        }
+        else if (result.length > 0) {
+            const sqlDelete = "DELETE FROM likes WHERE likedPostId = ? AND likedUserId = ?";
+            db.query(sqlDelete, [likedPostId, likedUserId], (err, result) => {
+                res.send({ status: "unliked" });
+            });
+        } 
+        else {
+            const sqlInsert = "INSERT INTO likes (likeId, likedPostId, likedUserId) VALUES (NULL, ?, ?)";
+            db.query(sqlInsert, [likedPostId, likedUserId], (err, result) => {
+                res.send({ status: "liked" });
+            });
+        }
+    });
+});
+
+// API to Get Like Count
+app.get('/getLikeCount/:postId', (req, res) => {
+    const postId = req.params.postId;
+    const sqlCount = "SELECT COUNT(*) AS count FROM likes WHERE likedPostId = ?";
+    
+    db.query(sqlCount, [postId], (err, result) => {
+        if (err) console.log(err);
+        else res.send(result);
     });
 });
 
