@@ -51,8 +51,7 @@ app.post('/getUserInfo', (req, res) => {
 });
 
 app.get("/getAllPosts", (req, res) => {
-  const sqlForAllPosts = `SELECT posts.postId, users.userName As PosatedUserName, users.userImage As PostedUserImage, posts.postedTime, posts.postText, posts.postImageUrl FROM posts INNER JOIN users ON posts.postedUserId=users.userId ORDER BY posts.postedTime DESC`;
-
+  const sqlForAllPosts = `SELECT posts.postedUserId, posts.postId, users.userName As PosatedUserName, users.userImage As PostedUserImage, posts.postedTime, posts.postText, posts.postImageUrl FROM posts INNER JOIN users ON posts.postedUserId=users.userId ORDER BY posts.postedTime DESC`;
   let query = db .query(sqlForAllPosts, (err, result) => {
     if(err) {
       console.log("Error while fetching all posts: ", err);
@@ -143,6 +142,35 @@ app.post('/register', (req, res) => {
     });
 });
 
+// API to Delete a Post
+app.delete('/deletePost/:postId', (req, res) => {
+    const id = req.params.postId;
+    const sqlDelete = "DELETE FROM posts WHERE postId = ?";
+    db.query(sqlDelete, [id], (err, result) => {
+        if (err) {
+            console.log(err);
+            res.status(500).send("Error deleting post");
+        } else {
+            res.send("Post deleted");
+        }
+    });
+});
+
+// API to Edit a Post (Text AND Image)
+app.put('/editPost', (req, res) => {
+    const { postId, postText, postImageUrl } = req.body;
+    
+    const sqlUpdate = "UPDATE posts SET postText = ?, postImageUrl = ? WHERE postId = ?";
+    
+    db.query(sqlUpdate, [postText, postImageUrl, postId], (err, result) => {
+        if (err) {
+            console.log(err);
+            res.status(500).send("Error updating post");
+        } else {
+            res.send("Post updated");
+        }
+    });
+});
 
 // Starting the server
 app.listen(port, () => {
