@@ -308,6 +308,32 @@
     </div>
     </section>
 
+<div id="edit-modal" class="modal hidden">
+        <div class="modal-content">
+            <h3>Edit Post</h3>
+            
+            <textarea id="edit-post-text" rows="4" placeholder="Edit caption..."></textarea>
+            
+            <input type="text" id="edit-post-image" placeholder="Edit image URL...">
+            
+            <div class="modal-actions">
+                <button onclick="closeModal('edit-modal')" class="cancel-btn">Cancel</button>
+                <button onclick="submitEditPost()" class="save-btn">Save Changes</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="delete-modal" class="modal hidden">
+        <div class="modal-content">
+            <h3>Delete Post?</h3>
+            <p>Are you sure you want to delete this post? This action cannot be undone.</p>
+            <div class="modal-actions">
+                <button onclick="closeModal('delete-modal')" class="cancel-btn">Cancel</button>
+                <button onclick="submitDeletePost()" class="delete-confirm-btn">Yes, Delete</button>
+            </div>
+        </div>
+    </div>
+
     <script src="./js/utils/calculateTimeDifference.js"></script>
     <script src="./js/fetchData.js"></script>
 </body>

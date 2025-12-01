@@ -45,87 +45,91 @@ const showAllPosts = (allposts) => {
     const postsContainer = document.getElementById("post-container");
     postsContainer.innerHTML = "";
 
+    // 1. Get current user ID
+    let currentUser = localStorage.getItem("loggedInUser");
+    let currentUserId = null;
+    if(currentUser) {
+        currentUserId = parseInt(JSON.parse(currentUser).userId);
+    }
+
     allposts.forEach(async post => {
         const postDiv = document.createElement("div");
         postDiv.classList.add("post");
 
-        postDiv.innerHTML = `
-        <div class = "post-header">
-            <div class = "post-user-image">
-                <img src="${post.PostedUserImage}" alt="User Image">
-            </div>
+        // 2. Create Action Buttons ONLY if user owns the post
+        let actionButtons = "";
+        if (currentUserId == post.postedUserId) {
+            actionButtons = `
+                <div class="post-actions-menu">
+                    <button class="action-btn edit-btn" onclick="handleEditPost(${post.postId}, '${post.postText}', '${post.postImageUrl}')">Edit</button>
+                    <button class="action-btn delete-btn" onclick="handleDeletePost(${post.postId})">Delete</button>
+                </div>
+            `;
+        }
 
-            <div class = "post-username-time">
-                <p class="post-username">${post.PosatedUserName}</p>
-                <div class = "post-time">
-                    <span>${timeDifference(`${post.postedTime}`)}</span>
-                    <span>ago</span>
+        postDiv.innerHTML = `
+        <div class="post-header">
+            <div class="post-header-left">
+                <div class="post-user-image">
+                    <img src="${post.PostedUserImage}" alt="User Image">
+                </div>
+                <div class="post-username-time">
+                    <p class="post-username">${post.PosatedUserName}</p>
+                    <div class="post-time">
+                        <span>${timeDifference(post.postedTime)}</span>
+                    </div>
                 </div>
             </div>
+            
+            <div class="post-header-right">
+                ${actionButtons}
+            </div>
         </div>
 
-        <div class = "post-text">
-            <p class = "post-text-content">
-               ${post.postText}
-            </p>
+        <div class="post-text">
+            <p class="post-text-content">${post.postText}</p>
         </div>
 
-        <div class = "post-image">
+        <div class="post-image">
             <img src="${post.postImageUrl}" alt="Post Image">
         </div>       
         `;
 
         postsContainer.appendChild(postDiv);
 
-        // comments unedr a post
-
+        // --- COMMENT SECTION LOGIC (Copy this back if you deleted it) ---
         let postComments = await fetchAllCommentsOfAPost(post.postId);
-        console.log("postComments: ", postComments);
+        const commentsHolderDiv = document.createElement("div");
+        commentsHolderDiv.classList.add("comment-holder");
 
         postComments.forEach((comment) => {
-            const commentsHolderDiv = document.createElement("div");
-            commentsHolderDiv.classList.add("comment-holder");
-
-            commentsHolderDiv.innerHTML = `
-        <div class = "comment">
-                <div class = "comment-user-image">
-                    <img src=${comment.commentedUserImage} alt="Comment User Image">
-
+            const singleCommentDiv = document.createElement("div");
+            singleCommentDiv.classList.add("comment");
+            singleCommentDiv.innerHTML = `
+                <div class="comment-user-image">
+                    <img src="${comment.commentedUserImage}" alt="Comment User Image">
                 </div>
-
-                <div class = "comment-text-container">
+                <div class="comment-text-container">
                     <h4>${comment.commentedUserName}</h4>
-                    <p class = "comment-text">
-                    ${comment.commentText}
-                    </p>
-            </div>
-        </div>
-        `;
-
+                    <p class="comment-text">${comment.commentText}</p>
+                </div>
+            `;
+            commentsHolderDiv.appendChild(singleCommentDiv);
+        });
         postDiv.appendChild(commentsHolderDiv);
+
+        const addNewCommetnDiv = document.createElement("div");
+        addNewCommetnDiv.classList.add("new-comment-section");
+        addNewCommetnDiv.innerHTML = `
+            <div class="new-comment-input">
+                <input type="text" placeholder="Add a comment..." class="new-comment-textbox" id="new-comment-textbox-for-postId-${post.postId}">
+            </div>
+            <div class="new-comment-button">
+                <button onclick="handlePostComment(${post.postId})" class="new-comment-submit-button">Comment</button>
+            </div>
+        `;
+        postDiv.appendChild(addNewCommetnDiv);
     });
-
-    // adding a new comment to the post
-
-    const addNewCommetnDiv = document.createElement("div");
-    addNewCommetnDiv.classList.add("new-comment-section");
-
-    addNewCommetnDiv.innerHTML = `
-            <div class = "new-comment-input">
-                <input 
-                type="text" 
-                placeholder="Add a comment..." 
-                class = "new-comment-textbox" 
-                id = "new-comment-textbox-for-postId-${post.postId}">
-            </div>
-            <div class = "new-comment-button">
-                <button onClick = handlePostComment(${post.postId}) class = "new-comment-submit-button" id = "new-comment-submit-button-for-postId1">Comment</button>
-
-            </div>
-    `
-
-    postDiv.appendChild(addNewCommetnDiv);
-});
 };
 
 const handlePostComment = async (postId) => {
@@ -240,6 +244,70 @@ const handleAddNewPost = async () => {
         location.reload();
     }
     
+};
+
+let postIdToDelete = null;
+let postIdToEdit = null;
+
+const closeModal = (modalId) => {
+    document.getElementById(modalId).classList.add('hidden');
+};
+
+//Triggered when click "Delete" on the post
+const handleDeletePost = (postId) => {
+    postIdToDelete = postId;
+    document.getElementById('delete-modal').classList.remove('hidden'); // Show Modal
+};
+
+//Triggered when click "Yes, Delete" inside the modal
+const submitDeletePost = async () => {
+    if (!postIdToDelete) return;
+
+    try {
+        await fetch(`http://localhost:5000/deletePost/${postIdToDelete}`, { method: 'DELETE' });
+        location.reload();
+    } catch (err) {
+        console.log(err);
+    }
+};
+
+//Triggered when click "Edit" on the post
+const handleEditPost = (postId, currentText, currentImage) => {
+    postIdToEdit = postId; 
+    
+    // Fill the text box
+    document.getElementById('edit-post-text').value = currentText;
+    
+    // NEW: Fill the image URL box
+    document.getElementById('edit-post-image').value = currentImage;
+    
+    document.getElementById('edit-modal').classList.remove('hidden');
+};
+
+//Triggered when click "Save Changes" inside the modal
+const submitEditPost = async () => {
+    if (!postIdToEdit) return;
+
+    // Get values from BOTH inputs
+    const newText = document.getElementById('edit-post-text').value;
+    const newImage = document.getElementById('edit-post-image').value;
+    
+    const updateData = { 
+        postId: postIdToEdit, 
+        postText: newText,
+        postImageUrl: newImage // NEW: Send the image URL
+    };
+
+    try {
+        await fetch(`http://localhost:5000/editPost`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(updateData)
+        });
+        location.reload();
+    } catch (err) {
+        console.log(err);
+    }
 };
 
 //This functions get called automatically whenever the script (fetchData) is loaded in the HTML page
