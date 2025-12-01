@@ -77,3 +77,22 @@ input[type="text"], input[type="password"] {
 .hidden {
     display: none;
 }
+
+.register-link-box {
+    margin-top: 20px;
+    font-size: 14px;
+    color: #333;
+}
+
+.register-link-box a {
+    color: #104E64;
+    font-weight: 700;
+    text-decoration: none;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.register-link-box a:hover {
+    color: #0D3E50;
+    text-decoration: underline;
+}

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - Postbook</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <h1>Create New Account</h1>
+    
+    <div class="login-form"> 
+        <h3>Register details</h3>
+        <form>
+            <input type="text" id="reg-username" placeholder="Full Name">
+            <input type="password" id="reg-password" placeholder="Password">
+            <input type="text" id="reg-image" placeholder="Profile Image URL">
+            
+            <button type="button" onclick="handleRegister()" class="login-btn">Register</button>
+        </form>
+
+        <div class="register-link-box">
+            Already have an account? <a href="index.html">Login Here</a>
+        </div>
+    </div>
+
+    <div id="register-error" class="error hidden">
+        <h3>Something went wrong. Try again.</h3>
+    </div>
+
+    <script src="./js/register.js"></script>
+</body>
+</html>

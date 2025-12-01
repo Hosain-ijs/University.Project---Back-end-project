@@ -15,7 +15,7 @@ const handlelogin =  async() => {
     const errorElement = document.getElementById('user-login-error');
 
     // show error message if userInfo did not match
-    if(userInfo.length === 0){
+    if(!userInfo || userInfo.length === 0){
         errorElement.classList.remove('hidden');
     }
     else{

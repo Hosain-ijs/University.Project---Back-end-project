@@ -126,6 +126,24 @@ app.post('/addNewPost', (req, res) => {
   });
 });
 
+// Register New User
+app.post('/register', (req, res) => {
+    const { userName, userPassword, userImage } = req.body;
+
+    const sqlRegister = "INSERT INTO users (userId, userName, userPassword, userImage) VALUES (NULL, ?, ?, ?)";
+
+    db.query(sqlRegister, [userName, userPassword, userImage], (err, result) => {
+        if(err) {
+            console.log("Error registering user: ", err);
+            res.status(500).send({ message: "Error registering user" });
+        } else {
+            console.log("User registered successfully");
+            res.send({ message: "Registration successful" });
+        }
+    });
+});
+
+
 // Starting the server
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
