@@ -14,7 +14,7 @@
     
     <div class="login-form"> 
         <h3>Login to your account</h3>
-        <form>
+        <form onsubmit="event.preventDefault()">
             <input type="text" name="user-id" id="user-id" placeholder="User ID">
             <input type="password" id="password" placeholder="Password">
             <button type="button" onclick="handlelogin()" class="login-btn">Login</button>

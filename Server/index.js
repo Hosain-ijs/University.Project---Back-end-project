@@ -41,7 +41,7 @@ app.post('/getUserInfo', (req, res) => {
   let query = db .query(getUserInfosql, [userId, password], (err, result) => {
     if(err) {
       console.log("Error while fetching user data: ", err);
-      throw err;
+      res.send([]);
     }
     else{
       console.log("User data fetched successfully");

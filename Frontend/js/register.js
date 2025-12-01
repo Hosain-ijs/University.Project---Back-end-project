@@ -4,9 +4,14 @@ const handleRegister = async () => {
     const userPassword = document.getElementById('reg-password').value;
     const userImage = document.getElementById('reg-image').value;
 
+    //Get the error box
+    const errorElement = document.getElementById('register-error');
+    const errorText = errorElement.querySelector('h3');
+
     //Simple Validation
     if(!userName || !userPassword || !userImage) {
-        alert("Please fill in all fields");
+        errorText.innerText = "Please fill in all fields";
+        errorElement.classList.remove('hidden');
         return;
     }
 
@@ -31,6 +36,7 @@ const handleRegister = async () => {
             window.location.href = "index.html";
         } else {
             alert("Registration failed.");
+            errorElement.classList.remove('hidden');
         }
     } catch(err) {
         console.error("Error registering user:", err);
