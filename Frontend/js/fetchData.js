@@ -45,18 +45,18 @@ const showAllPosts = (allposts) => {
     const postsContainer = document.getElementById("post-container");
     postsContainer.innerHTML = "";
 
-    // 1. Get current user ID
+    //Get current user ID
     let currentUser = localStorage.getItem("loggedInUser");
     let currentUserId = null;
     if(currentUser) {
-        currentUserId = parseInt(JSON.parse(currentUser).userId);
+        currentUserId = JSON.parse(currentUser).userId;
     }
 
     allposts.forEach(async post => {
         const postDiv = document.createElement("div");
         postDiv.classList.add("post");
 
-        // 2. Create Action Buttons ONLY if user owns the post
+        //Action Buttons logic (Edit/Delete)
         let actionButtons = "";
         if (currentUserId == post.postedUserId) {
             actionButtons = `
@@ -80,7 +80,6 @@ const showAllPosts = (allposts) => {
                     </div>
                 </div>
             </div>
-            
             <div class="post-header-right">
                 ${actionButtons}
             </div>
@@ -97,7 +96,7 @@ const showAllPosts = (allposts) => {
 
         postsContainer.appendChild(postDiv);
 
-        // --- COMMENT SECTION LOGIC (Copy this back if you deleted it) ---
+        //Comments Logic
         let postComments = await fetchAllCommentsOfAPost(post.postId);
         const commentsHolderDiv = document.createElement("div");
         commentsHolderDiv.classList.add("comment-holder");
@@ -118,36 +117,47 @@ const showAllPosts = (allposts) => {
         });
         postDiv.appendChild(commentsHolderDiv);
 
+        //New Comment Section (Added like button here)
         const addNewCommetnDiv = document.createElement("div");
         addNewCommetnDiv.classList.add("new-comment-section");
+        
         addNewCommetnDiv.innerHTML = `
+            <div class="like-section-inline">
+                <button class="action-btn like-btn" onclick="handleLike(${post.postId})">
+                    ❤️ <span id="like-count-${post.postId}">0</span>
+                </button>
+            </div>
+
             <div class="new-comment-input">
                 <input type="text" placeholder="Add a comment..." class="new-comment-textbox" id="new-comment-textbox-for-postId-${post.postId}">
             </div>
+            
             <div class="new-comment-button">
                 <button onclick="handlePostComment(${post.postId})" class="new-comment-submit-button">Comment</button>
             </div>
         `;
         postDiv.appendChild(addNewCommetnDiv);
+
+        //Fetch Like Count (Moved to end so the element exists)
+        fetchLikeCount(post.postId);
     });
 };
 
 const handlePostComment = async (postId) => {
 
-    // collecting logged in user info from local storage
+    //Collecting logged in user info from local storage
     let user = localStorage.getItem("loggedInUser");
     if(user){
         user = JSON.parse(user);
     }
     const commentedUserId = user.userId;
 
-    // collecting comment text from input box
+    //Collecting comment text from input box
     const commentInputBox = document.getElementById(`new-comment-textbox-for-postId-${postId}`);
 
     const commentText = commentInputBox.value;
 
-    //current time of the comment
-
+    //Current time of the comment
     let now = new Date();
 
     now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
@@ -196,21 +206,21 @@ const fetchAllCommentsOfAPost = async (postId) => {
 }
 
 const handleAddNewPost = async () => {
-   //geting user id from local storage
+   //Geting user id from local storage
     let user = localStorage.getItem("loggedInUser");
     if(user){
         user = JSON.parse(user);
     }
     const postedUserId = user.userId;
 
-    //current time of the post
+    //Current time of the post
     let now = new Date();
 
     now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
     
     let timeOfPost = now.toISOString();
 
-    //post text
+    //Post text
     const postTextElement = document.getElementById('newPost-text');
     const postText = postTextElement.value;
 
@@ -218,7 +228,7 @@ const handleAddNewPost = async () => {
     const postImageElement = document.getElementById('newPost-image');
     const postImageUrl = postImageElement.value;
 
-    //creating a post object
+    //Creating a post object
     const postObject = {
         postedUserId : postedUserId,
         postedTime : timeOfPost,
@@ -256,7 +266,7 @@ const closeModal = (modalId) => {
 //Triggered when click "Delete" on the post
 const handleDeletePost = (postId) => {
     postIdToDelete = postId;
-    document.getElementById('delete-modal').classList.remove('hidden'); // Show Modal
+    document.getElementById('delete-modal').classList.remove('hidden');
 };
 
 //Triggered when click "Yes, Delete" inside the modal
@@ -275,12 +285,8 @@ const submitDeletePost = async () => {
 const handleEditPost = (postId, currentText, currentImage) => {
     postIdToEdit = postId; 
     
-    // Fill the text box
     document.getElementById('edit-post-text').value = currentText;
-    
-    // NEW: Fill the image URL box
     document.getElementById('edit-post-image').value = currentImage;
-    
     document.getElementById('edit-modal').classList.remove('hidden');
 };
 
@@ -288,14 +294,13 @@ const handleEditPost = (postId, currentText, currentImage) => {
 const submitEditPost = async () => {
     if (!postIdToEdit) return;
 
-    // Get values from BOTH inputs
     const newText = document.getElementById('edit-post-text').value;
     const newImage = document.getElementById('edit-post-image').value;
     
     const updateData = { 
         postId: postIdToEdit, 
         postText: newText,
-        postImageUrl: newImage // NEW: Send the image URL
+        postImageUrl: newImage
     };
 
     try {
@@ -307,6 +312,42 @@ const submitEditPost = async () => {
         location.reload();
     } catch (err) {
         console.log(err);
+    }
+};
+
+//Function to handle clicking the Like button
+const handleLike = async (postId) => {
+    let user = localStorage.getItem("loggedInUser");
+    if(user){
+        user = JSON.parse(user);
+    }
+    const likedUserId = user.userId;
+
+    const likeData = { likedPostId: postId, likedUserId: likedUserId };
+
+    try {
+        await fetch("http://localhost:5000/toggleLike", {
+            method: "POST",
+            headers: { "content-type": "application/json" },
+            body: JSON.stringify(likeData)
+        });
+        fetchLikeCount(postId);
+    } catch (err) {
+        console.log("Error liking post:", err);
+    }
+};
+
+// Function to get the number of likes
+const fetchLikeCount = async (postId) => {
+    try {
+        const res = await fetch(`http://localhost:5000/getLikeCount/${postId}`);
+        const data = await res.json();
+        const countSpan = document.getElementById(`like-count-${postId}`);
+        if(countSpan) {
+            countSpan.innerText = data[0].count;
+        }
+    } catch (err) {
+        console.log("Error fetching likes:", err);
     }
 };
 

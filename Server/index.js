@@ -7,13 +7,11 @@ const port = 5000;
 const app = express();
 
 // Middlewares
-
 app.use(cors());
 app.use(express.json());
 
 // MySQL Connection
-
-var db = mysql.createConnection({
+let db = mysql.createConnection({
   host     : 'localhost',
   user     : 'root',
   password : '',
@@ -30,14 +28,13 @@ db.connect((err) => {
   }
 });
 
-// getting user data from server
-
+//Getting user data from server
 app.post('/getUserInfo', (req, res) => {
 
   const { userId, password } = req.body;
 
   const getUserInfosql = 'SELECT userId, userName, userImage FROM users WHERE users.userId = ? AND users.userPassword = ?';
-
+  
   let query = db .query(getUserInfosql, [userId, password], (err, result) => {
     if(err) {
       console.log("Error while fetching user data: ", err);
@@ -51,7 +48,9 @@ app.post('/getUserInfo', (req, res) => {
 });
 
 app.get("/getAllPosts", (req, res) => {
+  
   const sqlForAllPosts = `SELECT posts.postedUserId, posts.postId, users.userName As PosatedUserName, users.userImage As PostedUserImage, posts.postedTime, posts.postText, posts.postImageUrl FROM posts INNER JOIN users ON posts.postedUserId=users.userId ORDER BY posts.postedTime DESC`;
+  
   let query = db .query(sqlForAllPosts, (err, result) => {
     if(err) {
       console.log("Error while fetching all posts: ", err);
@@ -64,7 +63,7 @@ app.get("/getAllPosts", (req, res) => {
   });
 });
 
-// API to get all comments of a post
+//API to get all comments of a post
 app.get('/getAllComments/:postId', (req, res) => {
   let id = req.params.postId;
 
@@ -106,7 +105,7 @@ let query = db.query(sqlForPostingComment, [
 );
 });
 
-//addding a new post
+//Addding a new post
 app.post('/addNewPost', (req, res) => {
 
   const {postedUserId, postedTime, postText, postImageUrl} = req.body;
@@ -124,7 +123,7 @@ app.post('/addNewPost', (req, res) => {
   });
 });
 
-// Register New User
+//Register New User
 app.post('/register', (req, res) => {
     const { userName, userPassword, userImage } = req.body;
 

@@ -14,17 +14,17 @@ const handlelogin =  async() => {
     console.log(userInfo);
     const errorElement = document.getElementById('user-login-error');
 
-    // show error message if userInfo did not match
+    //Show error message if userInfo did not match
     if(!userInfo || userInfo.length === 0){
         errorElement.classList.remove('hidden');
     }
     else{
         errorElement.classList.add('hidden');
 
-        // store logged in user info in local storage before redirecting to post.html
+        //Store logged in user info in local storage before redirecting to post.html
         localStorage.setItem("loggedInUser", JSON.stringify(userInfo[0]));
 
-        // redirect to post.html
+        //Redirect to post.html
         window.location.href = "post.html";
     }
 };

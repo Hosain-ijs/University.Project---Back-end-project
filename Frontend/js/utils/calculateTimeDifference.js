@@ -19,7 +19,6 @@ function timeDifference(dateTimeString){
 
     let result = "";
 
-    //string concatenation "" + 15 days
     if(days > 0){
         result = result + `${days} days`;
     }
