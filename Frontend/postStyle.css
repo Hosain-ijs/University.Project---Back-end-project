@@ -239,22 +239,26 @@
 .new-comment-section {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 10px;               
     margin: 15px;
     padding-top: 10px;
     border-top: 1px solid #eee;
-}     
+}    
 
 .new-comment-input {
-    flex: 1; 
+    flex: 1;               
+    display: flex;         
 }
 
 .new-comment-textbox {
-    width: 100%; 
-    padding: 10px;
-    border-radius: 20px;
+    width: 100%;           
+    padding: 10px 15px;    
+    border-radius: 20px;    
     border: 1px solid #ccc;
     outline: none;
+    font-family: "Poppins", sans-serif;
+    font-size: 14px;
+    background-color: #f9f9f9;
 }
 
 .new-comment-submit-button {
